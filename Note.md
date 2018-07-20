@@ -37,7 +37,7 @@ git add <file>
 git commit -m "<message>"
 git push
 
-git fetch upstream/master
+git fetch upstream
 git diff master upstream/master
 git merge upstream/master
 ```
