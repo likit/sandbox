@@ -36,9 +36,10 @@ class  ResearchwithFund(Base):
 
 class  Staff(Base):
     __tablename__ = 'staff'
-    staff_email = Column('staff_email', String, primary_key=True)
+    staff_id = Column('staff_id', Integer, autoincrement=True, primary_key=True)
     staff_firstname = Column ('staff_firstname',String())
     staff_lastname = Column ('staff_lastname',String())
+    staff_email = Column ('staff_email',String())
     department_name = Column ('department_name',String())
 
 class  Date(Base):
@@ -56,7 +57,7 @@ class FundingResearchFact(Base):
     id = Column('id', Integer, primary_key=True, autoincrement=True)
     funding_id = Column('funding_id',  ForeignKey('funding_sources.funding_id'))
     research_id = Column('research_id',  ForeignKey('researchwithfund.research_id'))
-    staff_email = Column('staff_email',  ForeignKey('staff.staff_email'))
+    staff_id = Column('staff_id',  ForeignKey('staff.staff_id'))
     date_id = Column('date_id',  ForeignKey('date.date_id'))
     totalfunding = Column('totalfunding', Integer())
     totalstaff = Column('totalstaff', Integer())
