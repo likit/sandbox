@@ -15,7 +15,6 @@ engine = create_engine('sqlite:///research.db')
 class FundingSource(Base):
     __tablename__ = 'funding_sources'
     funding_id = Column('funding_id', Integer, autoincrement=True, primary_key=True)
-    funding_number = Column ('funding_number',Integer())
     funding_source = Column ('funding_source',String())
     funding_agency = Column ('funding_agency',String())
     duration = Column('duration', Boolean())
