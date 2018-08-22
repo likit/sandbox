@@ -8,18 +8,36 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-#staff_df = read_excel('sample_fundingdata.xlsx', sheet_name='Staff')
-fund_df = read_excel('sample_fundingdata.xlsx', sheet_name='FundingSource')
+researchwithfund_df = read_excel('sample_fundingdata.xlsx', sheet_name='ResearchwithFund')
 
-for ix,row in fund_df.iterrows():
-    fund = FundingSource(
-        funding_source = row['funding_source'],
-        funding_agency = row['funding_agency'],
-        duration = row['duration'],
-        funding_contract = row['funding_contract']
+for ix,row in researchwithfund_df.iterrows():
+    researchwithfund = ResearchwithFund(
+        research_name_th = row['research_name_th'],
+        research_name_en = row['research_name_en'],
+        research_field = row['research_field'],
+        research_budget_thisyear = row['research_budget_thisyear'],
+        research_budget_throughtout = row['research_budget_throughtout'],
+        research_startdate = row['research_startdate'],
+        research_enddate=row['research_enddate']
     )
-    session.add(fund)
+    session.add(researchwithfund)
 session.commit()
+
+
+#--------------FundingSource---------------------------
+#fund_df = read_excel('sample_fundingdata.xlsx', sheet_name='FundingSource')
+#for ix,row in fund_df.iterrows():
+#    fund = FundingSource(
+#        funding_source = row['funding_source'],
+#        funding_agency = row['funding_agency'],
+#        duration = row['duration'],
+#        funding_contract = row['funding_contract']
+#    )
+#    session.add(fund)
+#session.commit()
+
+#--------------Staff---------------------------
+#staff_df = read_excel('sample_fundingdata.xlsx', sheet_name='Staff')
 #for ix,row in staff_df.iterrows():
 #    st = Staff(
 #        staff_firstname=row['staff_firstname'],
@@ -29,6 +47,7 @@ session.commit()
 #    )
 #    session.add(st)
 #session.commit()
+
 
 #st = session.query(Staff).filter(Staff.staff_email=='napat.son').first()
 #st = session.query(Staff).filter(Staff.staff_email==row['staff_email']).first()
