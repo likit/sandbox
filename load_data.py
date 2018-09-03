@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from research_models import *
@@ -8,17 +10,17 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-researchwithfund_df = read_excel('sample_fundingdata.xlsx', sheet_name='ResearchwithFund')
+fundingresearchfact_df = read_excel('sample_fundingdata.xlsx',sheet_name='ResearchwithFund')
 
-for ix,row in researchwithfund_df.iterrows():
+for ix,row in fundingresearchfact_df.iterrows():
     researchwithfund = ResearchwithFund(
         research_name_th = row['research_name_th'],
         research_name_en = row['research_name_en'],
         research_field = row['research_field'],
         research_budget_thisyear = row['research_budget_thisyear'],
         research_budget_throughtout = row['research_budget_throughtout'],
-        research_startdate = row['research_startdate'],
-        research_enddate=row['research_enddate']
+        research_startdate = int(datetime.strftime(row['research_startdate'], '%Y%m%d')),
+        research_enddate = int(datetime.strftime(row['research_enddate'], '%Y%m%d'))
     )
     session.add(researchwithfund)
 session.commit()
