@@ -10,9 +10,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-fundingresearchfact_df = read_excel('sample_fundingdata.xlsx',sheet_name='ResearchwithFund')
+researchwithfund_df = read_excel('sample_fundingdata.xlsx',sheet_name='ResearchwithFund')
 
-for ix,row in fundingresearchfact_df.iterrows():
+for ix,row in researchwithfund_df.iterrows():
     researchwithfund = ResearchwithFund(
         research_name_th = row['research_name_th'],
         research_name_en = row['research_name_en'],
