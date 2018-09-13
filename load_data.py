@@ -9,34 +9,14 @@ engine = create_engine('sqlite:///research.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-
-researchwithfund_df = read_excel('sample_fundingdata.xlsx',sheet_name='ResearchwithFund')
-
-for ix,row in researchwithfund_df.iterrows():
-    researchwithfund = ResearchwithFund(
-        research_name_th = row['research_name_th'],
-        research_name_en = row['research_name_en'],
-        research_field = row['research_field'],
-        research_budget_thisyear = row['research_budget_thisyear'],
-        research_budget_throughtout = row['research_budget_throughtout'],
-        research_startdate = int(datetime.strftime(row['research_startdate'], '%Y%m%d')),
-        research_enddate = int(datetime.strftime(row['research_enddate'], '%Y%m%d'))
+fund_df = read_excel('sample_fundingdata.xlsx', sheet_name='FundingSource')
+for ix,row in fund_df.iterrows():
+    fund = FundingSource(
+        funding_source = row['funding_source'],
+        funding_agency = row['funding_agency']
     )
-    session.add(researchwithfund)
+    session.add(fund)
 session.commit()
-
-
-#--------------FundingSource---------------------------
-#fund_df = read_excel('sample_fundingdata.xlsx', sheet_name='FundingSource')
-#for ix,row in fund_df.iterrows():
-#    fund = FundingSource(
-#        funding_source = row['funding_source'],
-#        funding_agency = row['funding_agency'],
-#        duration = row['duration'],
-#        funding_contract = row['funding_contract']
-#    )
-#    session.add(fund)
-#session.commit()
 
 #--------------Staff---------------------------
 #staff_df = read_excel('sample_fundingdata.xlsx', sheet_name='Staff')
