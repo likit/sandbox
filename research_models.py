@@ -17,8 +17,8 @@ class FundingSource(Base):
     funding_id = Column('funding_id', Integer, autoincrement=True, primary_key=True)
     funding_source = Column ('funding_source',String())
     funding_agency = Column ('funding_agency',String())
-    duration = Column('duration', Boolean())
-    funding_contract = Column('funding_contract', Boolean())
+
+
 
 
 class  ResearchwithFund(Base):
@@ -31,6 +31,8 @@ class  ResearchwithFund(Base):
     research_budget_throughtout = Column('research_budget_throughtout', Integer())
     research_startdate = Column('research_startdate', Date())
     research_enddate = Column('research_enddate', Date())
+    duration = Column('duration', Boolean())
+    funding_contract = Column('funding_contract', Boolean())
 
 
 class  Staff(Base):
