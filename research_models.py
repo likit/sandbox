@@ -11,7 +11,7 @@ engine = create_engine('sqlite:///research.db')
 
 
 
-
+#Change att duration and funding_contract
 class FundingSource(Base):
     __tablename__ = 'funding_sources'
     funding_id = Column('funding_id', Integer, autoincrement=True, primary_key=True)
