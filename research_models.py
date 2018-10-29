@@ -1,6 +1,7 @@
 from sqlalchemy import (create_engine, Table, Column, Integer,
                         Numeric, String, Boolean, Date, ForeignKey, Float)
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -11,22 +12,10 @@ engine = create_engine('sqlite:///research.db')
 class FundingSource(Base):
     __tablename__ = 'funding_sources'
     funding_id = Column('funding_id', Integer, autoincrement=True, primary_key=True)
-    funding_source = Column ('funding_source',String())
-    funding_agency = Column ('funding_agency',String())
-
-
-class ResearchwithFund(Base):
-    __tablename__ = 'research_with_fund'
-    research_id = Column('research_id', Integer, autoincrement=True, primary_key=True)
-    research_name_th = Column('research_name_th', String())
-    research_name_en = Column('research_name_en', String())
-    research_field = Column('research_field', String())
-    research_budget_thisyear = Column('research_budget_this_year', Integer())
-    research_budget_throughtout = Column('research_budget_throughtout', Integer())
-    research_startdate = Column('research_startdate', Date())
-    research_enddate = Column('research_enddate', Date())
-    duration = Column('duration', Boolean())
-    funding_contract = Column('funding_contract', Boolean())
+    funding_source = Column('funding_source', String())
+    funding_agency = Column('funding_agency', String())
+    # not included in the db table
+    projects = relationship('FundingResearchFact', backref='funding_source')
 
 
 class Staff(Base):
@@ -36,6 +25,7 @@ class Staff(Base):
     staff_lastname = Column('staff_lastname', String())
     staff_email = Column('staff_email', String())
     department_name = Column('department_name', String())
+    funds = relationship('FundingResearchFact', backref='staff')
 
 
 class Date(Base):
@@ -56,6 +46,15 @@ class FundingResearchFact(Base):
     research_id = Column('research_id',  ForeignKey('research_with_fund.research_id'))
     staff_id = Column('staff_id',  ForeignKey('staff.staff_id'))
     date_id = Column('date_id',  ForeignKey('date.date_id'))
+    research_name_th = Column('research_name_th', String())
+    research_name_en = Column('research_name_en', String())
+    research_field = Column('research_field', String())
+    research_budget_thisyear = Column('research_budget_this_year', Integer())
+    research_budget_throughtout = Column('research_budget_throughtout', Integer())
+    research_startdate = Column('research_startdate', Date())
+    research_enddate = Column('research_enddate', Date())
+    duration = Column('duration', Boolean())
+    funding_contract = Column('funding_contract', Boolean())
     total_funding = Column('total_funding', Integer())
     total_staff = Column('total_staff', Integer())
     total_contract_project = Column('total_contract_project', Integer())
