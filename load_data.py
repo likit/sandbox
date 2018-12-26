@@ -9,63 +9,48 @@ engine = create_engine('sqlite:///research.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-
-#fundingresearchfact_df = read_excel('sample_fundingdata.xlsx')
-
-#for ix,row in fundingresearchfact_df.iterrows():
-#    fundingresearchfact = FundingResearchFact(
-#        research_name_th = row['research_name_th'],
-#        research_name_en = row['research_name_en'],
-#        research_field = row['research_field'],
-#        research_budget_thisyear = row['research_budget_thisyear'],
-#        research_budget_throughtout = row['research_budget_throughtout'],
-#        research_startdate = int(datetime.strftime(row['research_startdate'], '%Y%m%d')),
-#        research_enddate = int(datetime.strftime(row['research_enddate'], '%Y%m%d'))
-#        # st = session.query(Staff).filter(Staff.staff_email=='napat.son').first()
-#        # st = session.query(Staff).filter(Staff.staff_email==row['staff_email']).first()
-#        # st.staff_id
-#    )
-#    session.add(fundingresearchfact)
-#session.commit()
-
-
-#--------------ResearchwithFund---------------------------
-researchwithfund_df = read_excel('sample_fundingdata.xlsx',sheet_name='ResearchwithFund')
-for ix,row in researchwithfund_df.iterrows():
-    researchwithfund = ResearchwithFund(
-        research_name_th = row['research_name_th'],
-        research_name_en = row['research_name_en'],
-        research_field = row['research_field'],
-        research_budget_thisyear = row['research_budget_thisyear'],
-        research_budget_throughtout = row['research_budget_throughtout'],
-        research_startdate = int(datetime.strftime(row['research_startdate'], '%Y%m%d')),
-        research_enddate = int(datetime.strftime(row['research_enddate'], '%Y%m%d')),
-        duration = row['duration'],
-        funding_contract = row['funding_contract']
-    )
-    session.add(researchwithfund)
-session.commit()
-
-#--------------FundingSource---------------------------
-fund_df = read_excel('sample_fundingdata.xlsx', sheet_name='FundingSource')
+#--------------FundingSource-------------------
+fund_df = read_excel('samplefunding.xlsx', sheet_name='info')
 for ix,row in fund_df.iterrows():
-    fund = FundingSource(
-        funding_source = row['funding_source'],
-        funding_agency = row['funding_agency']
+    funding_sources = FundingSource(
+        funding_source = row['all funding source'],
+        funding_agency = row['all funding agency']
     )
-    session.add(fund)
+    session.add(funding_sources)
 session.commit()
-
 #--------------Staff---------------------------
-staff_df = read_excel('sample_fundingdata.xlsx', sheet_name='Staff')
+staff_df = read_excel('samplefunding.xlsx', sheet_name='info')
 for ix,row in staff_df.iterrows():
-    st = Staff(
-        staff_firstname=row['staff_firstname'],
-        staff_lastname=row['staff_lastname'],
-        staff_email=row['staff_email'],
-        department_name=row['department_name']
+    staff = Staff(
+        staff_firstname=row['first name'],
+        staff_lastname=row['last name'],
+        staff_email=row['all main researcher email'],
     )
-    session.add(st)
+    session.add(staff)
+session.commit()
+#--------------Department----------------------
+department_df = read_excel('samplefunding.xlsx', sheet_name='info')
+for ix,row in department_df.iterrows():
+    department = Department(
+        department_name=row['all department']
+    )
+    session.add(department)
+session.commit()
+#--------------Research------------------------
+research_df = read_excel('samplefunding.xlsx',sheet_name='funding')
+for ix,row in research_df.iterrows():
+    research = Research_df(
+        research_title_th = row['research title thai'],
+        research_title_en = row['research title eng'],
+       # research_field = row['research_field'],
+       # research_budget_thisyear = row['research_budget_thisyear'],
+        est_funding = row['amount fund'],
+        research_startdate = int(datetime.strftime(row['start date'], '%m%d%Y')),
+        research_enddate = int(datetime.strftime(row['end date'], '%m%d%Y')),
+      # duration = row['duration'],
+        research_contract = row['research contract']
+    )
+    session.add(research)
 session.commit()
 
 
