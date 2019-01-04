@@ -18,9 +18,7 @@ for ix,row in info_df.iterrows():
         funding_agency = row['all funding agency']
     )
     staff = Staff(
-        staff_firstname=row['first name'],
-        staff_lastname=row['last name'],
-        staff_email=row['all main researcher email'],
+        staff_email=row['all main researcher email']
     )
     department = Department(
         department_name=row['all department']
