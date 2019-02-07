@@ -9,9 +9,14 @@ engine = create_engine('sqlite:///research.db')
 # Change att duration and funding_contract
 class FundingSource(Base):
     __tablename__ = 'funding_sources'
-    funding_id = Column('funding_id', Integer, autoincrement=True, primary_key=True)
-    funding_source = Column('funding_source', String())
-    funding_agency = Column('funding_agency', String())
+    id = Column('id', Integer, autoincrement=True, primary_key=True)
+    source = Column('source', String())
+
+
+class FundingAgency(Base):
+    __tablename__ = 'funding_agencies'
+    id = Column('id', Integer, autoincrement=True, primary_key=True)
+    name = Column('name', String())
 
 
 class Staff(Base):
@@ -51,7 +56,7 @@ class Date(Base):
 class FundingResearchFact(Base):
     __tablename__ = 'funding_research_fact'
     id = Column('id', Integer, primary_key=True, autoincrement=True)
-    funding_id = Column('funding_id', ForeignKey('funding_sources.funding_id'))
+    funding_id = Column('funding_id', ForeignKey('funding_sources.id'))
     research_id = Column('research_id', ForeignKey('research.research_id'))
     staff_id = Column('staff_id', ForeignKey('staff.staff_id'))
     department_id = Column('department_id', ForeignKey('department.department_id'))
