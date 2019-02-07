@@ -1,4 +1,5 @@
-from sqlalchemy import (create_engine, Table, Column, Integer, String, Date, ForeignKey, Float, Boolean)
+from sqlalchemy import (create_engine, Table, Column, Integer,
+                        String, Date, ForeignKey, Float, Boolean)
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -32,15 +33,17 @@ class Department(Base):
     department_id = Column('department_id', Integer, autoincrement=True, primary_key=True)
     department_name = Column('department_name', String())
 
-class Research(Base):
-    __tablename__ = 'research'
-    research_id = Column('research_id', Integer, autoincrement=True, primary_key=True)
-    research_title_th = Column('research_title_th', String(200))
-    research_title_en = Column('research_title_en', String(200))
+
+class ResearchProject(Base):
+    __tablename__ = 'research_projects'
+    id = Column('id', Integer, autoincrement=True, primary_key=True)
+    title_th = Column('title_th', String())
+    title_en = Column('title_en', String())
     est_funding = Column('est_funding',Float())
-    research_startdate = Column('research_startdate', Date())
-    research_enddate = Column('research_enddate', Date())
-    research_contract = Column('research_contract', Boolean())
+    startdate = Column('startdate', Date())
+    enddate = Column('enddate', Date())
+    contract = Column('contract', Boolean())
+
 
 class Date(Base):
     __tablename__ = 'date'
@@ -53,6 +56,7 @@ class Date(Base):
     academic_year = Column('academic_year', Integer())
 
 
+'''
 class FundingResearchFact(Base):
     __tablename__ = 'funding_research_fact'
     id = Column('id', Integer, primary_key=True, autoincrement=True)
@@ -62,6 +66,7 @@ class FundingResearchFact(Base):
     department_id = Column('department_id', ForeignKey('department.department_id'))
     date_id = Column('date_id', ForeignKey('date.date_id'))
     each_funding = Column('total_funding', Float())
+'''
 
 
 if __name__ == '__main__':

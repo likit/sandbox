@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from research_models import *
 from pandas import read_excel
+import numpy
 
 engine = create_engine('sqlite:///research.db')
 Session = sessionmaker(bind=engine)
@@ -52,6 +53,32 @@ def load_funding_agency(input_file, sheet_name=None):
     session.commit()
 
 
+def load_research_project(input_file, sheet_name=None):
+    """
+    Load project information to the db.
+    :param input_file:
+    :param sheet_name:
+    :return None:
+    """
+
+    df = read_excel(input_file, sheet_name=sheet_name)
+
+    for idx, project in df[[df.columns[4], df.columns[5]]].iterrows():
+        th_name, en_name = project
+
+        en_name = en_name.strip() if not isinstance(en_name, float) else None
+        th_name = th_name.strip() if not isinstance(th_name, float) else None
+
+        if not th_name: # None or empty string
+            th_name = en_name
+
+        if th_name and en_name:
+            p = ResearchProject(title_th=th_name, title_en=en_name)
+            session.add(p)
+
+    session.commit()
+
+
 def load_researcher(input_file, sheet_name=None):
     """
 
@@ -86,4 +113,5 @@ def load_researcher(input_file, sheet_name=None):
 
 if __name__ == '__main__':
     # load_funding_resource('samplefunding.xlsx', 'funding')
-    load_funding_agency('samplefunding.xlsx', 'funding')
+    # load_funding_agency('samplefunding.xlsx', 'funding')
+    load_research_project('samplefunding.xlsx', 'funding')
